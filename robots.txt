@@ -1,0 +1,5 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Disallow: /bin/
+Disallow: /proxy
+Sitemap: https://garrick.monster/sitemap.xml

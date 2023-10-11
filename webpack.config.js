@@ -38,9 +38,25 @@ module.exports = {
           "postcss-loader", // post process the compiled CSS
         ],
       },
+      // {
+      //   test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
+      //   type: "asset/resource",
+      //   use: [
+      //     {
+      //       loader: "url-loader",
+      //       options: {
+      //         limit: 10000,
+      //       },
+      //     },
+      //   ],
+      // },
       {
-        test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
-        type: "asset/resource",
+        test: /\.(png|jpe?g|gif|jp2|webp|avif)$/,
+        loader: "file-loader",
+        options: {
+          name: "[name].[ext]",
+          outputPath: "images",
+        },
       },
     ],
   },
@@ -52,6 +68,10 @@ module.exports = {
       patterns: [
         { from: "sitemap.xml", to: "sitemap.xml", force: true },
         { from: "robots.txt", to: "robots.txt", force: true },
+        {
+          from: path.resolve(__dirname, "src", "assets"),
+          to: path.resolve(__dirname, "build", "assets"),
+        },
       ],
       options: {
         concurrency: 100,

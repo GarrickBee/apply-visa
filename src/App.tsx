@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import HomePage from "./page/home.page";
 
 const helmetContext = {};
 
@@ -30,6 +31,12 @@ const App: React.FC<{}> = () => {
             content="https://images.unsplash.com/photo-1484417894907-623942c8ee29?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=630"
           />
         </Helmet>
+
+        <BrowserRouter basename="/">
+          <Routes>
+            <Route path="/" element={<HomePage />}></Route>
+          </Routes>
+        </BrowserRouter>
       </HelmetProvider>
     </>
   );

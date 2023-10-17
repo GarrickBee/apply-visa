@@ -15,39 +15,64 @@ import {
   CardContent,
   CardMedia,
   Checkbox,
+  Container,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
+  List,
+  ListItem,
   Typography,
+  useTheme,
 } from "@mui/material";
-import usDepartmentOfStatePng from "../assets/image/us_department_of_state.png";
-import usTravelDocsPng from "../assets/image/us_flag_jeep.avif";
-import onlinePaymentPhoto from "../assets/image/payment.jpg";
-import interviewPhoto from "../assets/image/visa-interview.jpg";
-import readyToTravelPhoto from "../assets/image/ready_to_travel.jpg";
-import scheduleInterviewPhoto from "../assets/image/schedule_interview.jpg";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useForm } from "react-hook-form";
 import useFormPersist from "react-hook-form-persist";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface FormInputs {
-  step: number;
+  [step: string]: number;
   maxStep: number;
 }
 
+interface Step {
+  no: number;
+  coverPhoto: string;
+  title: string;
+  infoLink: string;
+  applicationLink?: string;
+  descriptions: string[];
+}
+
+type Steps = Step[];
+
 const HomePage: React.FC<{}> = () => {
+  const theme = useTheme();
+  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
+
+  // Init Detail Explanation Modal
   const [modalOpen, setModalOpen] = useState(false);
   const handleClose = () => setModalOpen(false);
 
-  const { register, watch, setValue, getValues } = useForm<FormInputs>();
-
+  const { register, watch, setValue, getValues, reset } = useForm<FormInputs>();
+  // Load save form data
   useFormPersist("visa.us.travel", {
     watch,
     setValue,
     storage: window.localStorage,
   });
+
+  // Load visa step
+  const [steps, setSteps] = useState<Steps | undefined>(undefined);
+  useEffect(() => {
+    const loadSteps = async () => {
+      const response = await import("./visa.us.en.json");
+      setSteps(response.default.steps.sort((a, b) => a.no - b.no));
+    };
+
+    loadSteps();
+  }, []);
 
   useEffect(() => {
     watch((value, { name, type }) => console.log(value, name, type));
@@ -57,20 +82,20 @@ const HomePage: React.FC<{}> = () => {
     cardAlign?: "right" | "left";
     coverPhoto: string;
     title: string;
-    description: () => ReactNode;
     infoLink: string;
     applicationLink?: string;
-  }> = ({ cardAlign, title, coverPhoto, description, infoLink, applicationLink }) => {
+    children: ReactNode;
+  }> = ({ cardAlign, title, coverPhoto, infoLink, applicationLink, children }) => {
     return (
-      <TimelineContent sx={{ py: "12px", px: 2 }}>
-        <Card sx={{ width: 375, ...(cardAlign ? { float: cardAlign } : {}) }}>
+      <TimelineContent>
+        <Card sx={{ maxWidth: 415, width: "100%", ...(cardAlign ? { float: cardAlign } : {}) }}>
           <CardActionArea>
             <CardMedia sx={{ height: 200, objectFit: "cover" }} image={coverPhoto} title={title} />
             <CardContent sx={{ textAlign: "left" }}>
               <Typography gutterBottom variant="h5" component="div" lineHeight={1.1}>
                 {title}
               </Typography>
-              {description()}
+              {children}
             </CardContent>
           </CardActionArea>
           <CardActions>
@@ -79,54 +104,10 @@ const HomePage: React.FC<{}> = () => {
                 Go To Application
               </Button>
             )}
-            <Button onClick={() => setModalOpen(true)}>Open modal</Button>
+            {/* <Button onClick={() => setModalOpen(true)}>Open modal</Button> */}
           </CardActions>
         </Card>
       </TimelineContent>
-    );
-  };
-
-  const VisaStep: React.FC<{ step: number; name: string }> = ({ step }) => {
-    return (
-      <>
-        <TimelineItem>
-          <TimelineOppositeContent
-            sx={{ m: "auto 0" }}
-            align="right"
-            variant="body2"
-            color="text.secondary"
-          >
-            Step 1
-          </TimelineOppositeContent>
-          <TimelineSeparator>
-            <TimelineConnector />
-            <Checkbox
-              color="success"
-              {...register("step")}
-              checked={getValues("step") >= 1}
-              value={1}
-            />
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineCard
-            coverPhoto={usDepartmentOfStatePng}
-            title="Online Nonimmigrant Visa Application (DS-160)"
-            infoLink="https://ceac.state.gov/genniv"
-            applicationLink="https://ceac.state.gov/genniv"
-            description={() => (
-              <>
-                <Typography variant="body2" color="text.secondary" gutterBottom>
-                  Access the DS-160 online application form.
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Fill out the form accurately, providing all required information. Be prepared to
-                  upload a recent passport-sized photo.
-                </Typography>
-              </>
-            )}
-          ></TimelineCard>
-        </TimelineItem>
-      </>
     );
   };
 
@@ -148,241 +129,87 @@ const HomePage: React.FC<{}> = () => {
         </DialogActions>
       </Dialog>
 
-      <Timeline position="alternate">
-        <form>
-          <input type="hidden" {...register("maxStep")}></input>
-          {/* Step 1  */}
-          <TimelineItem>
-            <TimelineOppositeContent
-              sx={{ m: "auto 0" }}
-              align="right"
-              variant="body2"
-              color="text.secondary"
-            >
-              Step 1
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineConnector />
-              <Checkbox
-                color="success"
-                {...register("step")}
-                checked={getValues("step") >= 1}
-                value={1}
-              />
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineCard
-              coverPhoto={usDepartmentOfStatePng}
-              title="Online Nonimmigrant Visa Application (DS-160)"
-              infoLink="https://ceac.state.gov/genniv"
-              applicationLink="https://ceac.state.gov/genniv"
-              description={() => (
-                <>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Access the DS-160 online application form.
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Fill out the form accurately, providing all required information. Be prepared to
-                    upload a recent passport-sized photo.
-                  </Typography>
-                </>
-              )}
-            ></TimelineCard>
-          </TimelineItem>
+      <form>
+        <Container maxWidth="xl">
+          <Timeline position={isMobile ? "left" : "alternate"} style={{ padding: "0" }}>
+            <input type="hidden" {...register("maxStep")}></input>
+            {steps &&
+              steps.map((step, stepIndex) => {
+                const coverImage = require(`@src/assets/image/${step.coverPhoto}`).default;
+                const formName = "step_" + step.no;
 
-          {/* Steps 2  */}
-          <TimelineItem>
-            <TimelineOppositeContent sx={{ m: "auto 0" }} variant="body2" color="text.secondary">
-              Step 2
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineConnector />
-              <Checkbox
-                color="success"
-                {...register("step")}
-                checked={getValues("step") >= 2}
-                value={2}
-              />
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineCard
-              coverPhoto={usTravelDocsPng}
-              title="Create a Profile on the U.S. Visa Information and Appointment Services Website"
-              infoLink="https://portal.ustraveldocs.com/applicanthome"
-              applicationLink="https://portal.ustraveldocs.com/applicanthome"
-              cardAlign="right"
-              description={() => (
-                <>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Go to the U.S. Visa Information and Appointment Services website.
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Create a profile and enter the DS-160 confirmation number.
-                  </Typography>
-                </>
-              )}
-            ></TimelineCard>
-          </TimelineItem>
+                return (
+                  <TimelineItem key={"step_" + stepIndex}>
+                    <TimelineOppositeContent
+                      sx={{
+                        ...{ marginBottom: "auto", marginTop: "auto" },
+                        ...(isMobile ? { flex: 0, padding: 0 } : {}),
+                      }}
+                      align="right"
+                      variant="body2"
+                      color="text.secondary"
+                    >
+                      {isMobile ? "" : "Step"} {stepIndex + 1}
+                    </TimelineOppositeContent>
 
-          {/* Steps 3  */}
-          <TimelineItem>
-            <TimelineOppositeContent sx={{ m: "auto 0" }} variant="body2" color="text.secondary">
-              Step 3
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineConnector />
-              <Checkbox
-                color="success"
-                {...register("step")}
-                checked={getValues("step") >= 3}
-                value={3}
-              />
-              <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
-            </TimelineSeparator>
-            <TimelineCard
-              coverPhoto={onlinePaymentPhoto}
-              title="Pay the Visa Application Fee"
-              infoLink="https://ceac.state.gov/genniv"
-              description={() => (
-                <>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    gutterBottom
-                    textAlign={"justify"}
-                  >
-                    Pay the non-refundable visa application fee through the designated payment
-                    system.
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Save the payment receipt as you will need it for scheduling your visa interview.
-                  </Typography>
-                </>
-              )}
-            ></TimelineCard>
-          </TimelineItem>
+                    <TimelineSeparator>
+                      <TimelineConnector />
+                      <Checkbox
+                        color="primary"
+                        {...register(formName)}
+                        checked={getValues(formName) >= 1}
+                        value={1}
+                      />
+                      <TimelineConnector />
+                    </TimelineSeparator>
 
-          {/* Step 4 */}
-          <TimelineItem>
-            <TimelineOppositeContent sx={{ m: "auto 0" }} variant="body2" color="text.secondary">
-              Step 4
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
-              <Checkbox
-                color="success"
-                {...register("step")}
-                checked={getValues("step") >= 4}
-                value={4}
-              />
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineCard
-              coverPhoto={scheduleInterviewPhoto}
-              title="Schedule An Interview"
-              infoLink="https://ceac.state.gov/genniv"
-              cardAlign="right"
-              description={() => (
-                <>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    textAlign={"justify"}
-                    gutterBottom
-                  >
-                    Use your profile on the U.S. Visa Information and Appointment Services website
-                    to schedule a visa interview at the nearest U.S. Embassy or Consulate.
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" textAlign={"justify"}>
-                    Pay any additional processing fees if required.
-                  </Typography>
-                </>
-              )}
-            ></TimelineCard>
-          </TimelineItem>
+                    <TimelineCard
+                      coverPhoto={coverImage}
+                      title={step.title}
+                      infoLink={step.infoLink}
+                      applicationLink={step.applicationLink}
+                      cardAlign={isMobile ? "right" : stepIndex % 2 == 0 ? "left" : "right"}
+                    >
+                      <List sx={{ listStyle: "decimal", pl: 2 }} color="secondary">
+                        {step &&
+                          step.descriptions &&
+                          step.descriptions.map((desc, descIndex) => {
+                            return (
+                              <ListItem
+                                sx={{ display: "list-item" }}
+                                disableGutters
+                                color="text.secondary"
+                              >
+                                <Typography
+                                  variant="body2"
+                                  color="text.secondary"
+                                  key={"desc_" + descIndex}
+                                  gutterBottom={descIndex != step.descriptions.length - 1}
+                                >
+                                  {desc}
+                                </Typography>
+                              </ListItem>
+                            );
+                          })}
+                      </List>
+                    </TimelineCard>
+                  </TimelineItem>
+                );
+              })}
+          </Timeline>
 
-          {/* Step 5 */}
-          <TimelineItem>
-            <TimelineOppositeContent sx={{ m: "auto 0" }} variant="body2" color="text.secondary">
-              Step 5
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
-              <Checkbox
-                color="success"
-                {...register("step")}
-                checked={getValues("step") >= 5}
-                value={5}
-              />
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineCard
-              coverPhoto={interviewPhoto}
-              title="Attend the Visa Interview"
-              infoLink="https://ceac.state.gov/genniv"
-              description={() => (
-                <>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    gutterBottom
-                    textAlign={"justify"}
-                  >
-                    Prepare all necessary documents, including your DS-160 confirmation page,
-                    passport, photo, and supporting documents based on your visa type.
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Attend the visa interview at the scheduled time and location.
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Answer questions honestly and provide any requested information.
-                  </Typography>
-                </>
-              )}
-            ></TimelineCard>
-          </TimelineItem>
-
-          {/* Step 6 */}
-          <TimelineItem>
-            <TimelineOppositeContent sx={{ m: "auto 0" }} variant="body2" color="text.secondary">
-              Step 6
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
-              <Checkbox
-                color="success"
-                {...register("step")}
-                checked={getValues("step") >= 6}
-                value={6}
-              />
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineCard
-              coverPhoto={readyToTravelPhoto}
-              title="Collect Your Visa And Get Ready To Travel"
-              infoLink="https://ceac.state.gov/genniv"
-              cardAlign="right"
-              description={() => (
-                <>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    After the interview and fingerprinting (if applicable), your visa application
-                    will undergo processing.
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    This can take several weeks, so be patient.
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Once you have your visa, you can plan your trip to the United States.
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Enjoy your trip to the U.S.!
-                  </Typography>
-                </>
-              )}
-            ></TimelineCard>
-          </TimelineItem>
-        </form>
-      </Timeline>
+          <Grid container spacing={2} justifyContent={"center"} textAlign={"center"}>
+            <Grid xs={12} md={1}>
+              <Button variant="contained">Share</Button>
+            </Grid>
+            <Grid xs={12} md={1}>
+              <Button variant="contained" onClick={() => reset()}>
+                Reset
+              </Button>
+            </Grid>
+          </Grid>
+        </Container>
+      </form>
     </>
   );
 };

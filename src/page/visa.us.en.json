@@ -2,7 +2,7 @@
   "steps": [
     {
       "no": 1,
-      "coverPhoto": "path/to/photo/usDepartmentOfStatePng",
+      "coverPhoto": "us_department_of_state.png",
       "title": "Online Nonimmigrant Visa Application (DS-160)",
       "infoLink": "https://ceac.state.gov/genniv",
       "applicationLink": "https://ceac.state.gov/genniv",
@@ -13,7 +13,7 @@
     },
     {
       "no": 2,
-      "coverPhoto": "path/to/photo/usTravelDocsPng",
+      "coverPhoto": "us_flag_jeep.avif",
       "title": "Create a Profile on the U.S. Visa Information and Appointment Services Website",
       "infoLink": "https://portal.ustraveldocs.com/applicanthome",
       "applicationLink": "https://portal.ustraveldocs.com/applicanthome",
@@ -24,7 +24,7 @@
     },
     {
       "no": 3,
-      "coverPhoto": "path/to/photo/onlinePaymentPhoto",
+      "coverPhoto": "payment.jpg",
       "title": "Pay the Visa Application Fee",
       "infoLink": "https://ceac.state.gov/genniv",
       "descriptions": [
@@ -34,7 +34,7 @@
     },
     {
       "no": 4,
-      "coverPhoto": "path/to/photo/scheduleInterviewPhoto",
+      "coverPhoto": "visa-interview.jpg",
       "title": "Schedule An Interview",
       "infoLink": "https://ceac.state.gov/genniv",
       "descriptions": [
@@ -44,7 +44,7 @@
     },
     {
       "no": 5,
-      "coverPhoto": "path/to/photo/interviewPhoto",
+      "coverPhoto": "schedule_interview.jpg",
       "title": "Attend the Visa Interview",
       "infoLink": "https://ceac.state.gov/genniv",
       "descriptions": [
@@ -55,7 +55,7 @@
     },
     {
       "no": 6,
-      "coverPhoto": "path/to/photo/readyToTravelPhoto",
+      "coverPhoto": "ready_to_travel.jpg",
       "title": "Collect Your Visa And Get Ready To Travel",
       "infoLink": "https://ceac.state.gov/genniv",
       "descriptions": [

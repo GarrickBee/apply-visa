@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import {
   Timeline,
   TimelineConnector,
@@ -33,12 +33,8 @@ import { useForm } from "react-hook-form";
 import useFormPersist from "react-hook-form-persist";
 
 interface FormInputs {
-  step1: boolean;
-  step2: boolean;
-  step3: boolean;
-  step4: boolean;
-  step5: boolean;
-  step6: boolean;
+  step: number;
+  maxStep: number;
 }
 
 const HomePage: React.FC<{}> = () => {
@@ -52,6 +48,10 @@ const HomePage: React.FC<{}> = () => {
     setValue,
     storage: window.localStorage,
   });
+
+  useEffect(() => {
+    watch((value, { name, type }) => console.log(value, name, type));
+  }, [watch]);
 
   const TimelineCard: React.FC<{
     cardAlign?: "right" | "left";
@@ -79,12 +79,54 @@ const HomePage: React.FC<{}> = () => {
                 Go To Application
               </Button>
             )}
-            <Button size="small">Learn More</Button>
-            <Button size="small">Share</Button>
             <Button onClick={() => setModalOpen(true)}>Open modal</Button>
           </CardActions>
         </Card>
       </TimelineContent>
+    );
+  };
+
+  const VisaStep: React.FC<{ step: number; name: string }> = ({ step }) => {
+    return (
+      <>
+        <TimelineItem>
+          <TimelineOppositeContent
+            sx={{ m: "auto 0" }}
+            align="right"
+            variant="body2"
+            color="text.secondary"
+          >
+            Step 1
+          </TimelineOppositeContent>
+          <TimelineSeparator>
+            <TimelineConnector />
+            <Checkbox
+              color="success"
+              {...register("step")}
+              checked={getValues("step") >= 1}
+              value={1}
+            />
+            <TimelineConnector />
+          </TimelineSeparator>
+          <TimelineCard
+            coverPhoto={usDepartmentOfStatePng}
+            title="Online Nonimmigrant Visa Application (DS-160)"
+            infoLink="https://ceac.state.gov/genniv"
+            applicationLink="https://ceac.state.gov/genniv"
+            description={() => (
+              <>
+                <Typography variant="body2" color="text.secondary" gutterBottom>
+                  Access the DS-160 online application form.
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Fill out the form accurately, providing all required information. Be prepared to
+                  upload a recent passport-sized photo.
+                </Typography>
+              </>
+            )}
+          ></TimelineCard>
+        </TimelineItem>
+      </>
     );
   };
 
@@ -108,6 +150,7 @@ const HomePage: React.FC<{}> = () => {
 
       <Timeline position="alternate">
         <form>
+          <input type="hidden" {...register("maxStep")}></input>
           {/* Step 1  */}
           <TimelineItem>
             <TimelineOppositeContent
@@ -122,8 +165,9 @@ const HomePage: React.FC<{}> = () => {
               <TimelineConnector />
               <Checkbox
                 color="success"
-                {...register("step1")}
-                checked={getValues("step1") == true}
+                {...register("step")}
+                checked={getValues("step") >= 1}
+                value={1}
               />
               <TimelineConnector />
             </TimelineSeparator>
@@ -145,6 +189,7 @@ const HomePage: React.FC<{}> = () => {
               )}
             ></TimelineCard>
           </TimelineItem>
+
           {/* Steps 2  */}
           <TimelineItem>
             <TimelineOppositeContent sx={{ m: "auto 0" }} variant="body2" color="text.secondary">
@@ -154,8 +199,9 @@ const HomePage: React.FC<{}> = () => {
               <TimelineConnector />
               <Checkbox
                 color="success"
-                {...register("step2")}
-                checked={getValues("step2") == true}
+                {...register("step")}
+                checked={getValues("step") >= 2}
+                value={2}
               />
               <TimelineConnector />
             </TimelineSeparator>
@@ -187,8 +233,9 @@ const HomePage: React.FC<{}> = () => {
               <TimelineConnector />
               <Checkbox
                 color="success"
-                {...register("step3")}
-                checked={getValues("step3") == true}
+                {...register("step")}
+                checked={getValues("step") >= 3}
+                value={3}
               />
               <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
             </TimelineSeparator>
@@ -224,8 +271,9 @@ const HomePage: React.FC<{}> = () => {
               <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
               <Checkbox
                 color="success"
-                {...register("step4")}
-                checked={getValues("step4") == true}
+                {...register("step")}
+                checked={getValues("step") >= 4}
+                value={4}
               />
               <TimelineConnector />
             </TimelineSeparator>
@@ -262,8 +310,9 @@ const HomePage: React.FC<{}> = () => {
               <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
               <Checkbox
                 color="success"
-                {...register("step5")}
-                checked={getValues("step5") == true}
+                {...register("step")}
+                checked={getValues("step") >= 5}
+                value={5}
               />
               <TimelineConnector />
             </TimelineSeparator>
@@ -302,8 +351,9 @@ const HomePage: React.FC<{}> = () => {
               <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
               <Checkbox
                 color="success"
-                {...register("step6")}
-                checked={getValues("step6") == true}
+                {...register("step")}
+                checked={getValues("step") >= 6}
+                value={6}
               />
               <TimelineConnector />
             </TimelineSeparator>

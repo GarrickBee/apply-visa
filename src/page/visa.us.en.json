@@ -1,0 +1,69 @@
+{
+  "steps": [
+    {
+      "no": 1,
+      "coverPhoto": "us_department_of_state.png",
+      "title": "Online Nonimmigrant Visa Application (DS-160)",
+      "infoLink": "https://ceac.state.gov/genniv",
+      "applicationLink": "https://ceac.state.gov/genniv",
+      "descriptions": [
+        "Access the DS-160 online application form.",
+        "Fill out the form accurately, providing all required information. Be prepared to upload a recent passport-sized photo."
+      ]
+    },
+    {
+      "no": 2,
+      "coverPhoto": "us_flag_jeep.avif",
+      "title": "Create a Profile on the U.S. Visa Information and Appointment Services Website",
+      "infoLink": "https://portal.ustraveldocs.com/applicanthome",
+      "applicationLink": "https://portal.ustraveldocs.com/applicanthome",
+      "descriptions": [
+        "Go to the U.S. Visa Information and Appointment Services website.",
+        "Create a profile and enter the DS-160 confirmation number."
+      ]
+    },
+    {
+      "no": 3,
+      "coverPhoto": "payment.jpg",
+      "title": "Pay the Visa Application Fee",
+      "infoLink": "https://ceac.state.gov/genniv",
+      "descriptions": [
+        "Pay the non-refundable visa application fee through the designated payment system.",
+        "Save the payment receipt as you will need it for scheduling your visa interview."
+      ]
+    },
+    {
+      "no": 4,
+      "coverPhoto": "visa-interview.jpg",
+      "title": "Schedule An Interview",
+      "infoLink": "https://ceac.state.gov/genniv",
+      "descriptions": [
+        "Use your profile on the U.S. Visa Information and Appointment Services website to schedule a visa interview at the nearest U.S. Embassy or Consulate.",
+        "Pay any additional processing fees if required."
+      ]
+    },
+    {
+      "no": 5,
+      "coverPhoto": "schedule_interview.jpg",
+      "title": "Attend the Visa Interview",
+      "infoLink": "https://ceac.state.gov/genniv",
+      "descriptions": [
+        "Prepare all necessary documents, including your DS-160 confirmation page, passport, photo, and supporting documents based on your visa type.",
+        "Attend the visa interview at the scheduled time and location.",
+        "Answer questions honestly and provide any requested information."
+      ]
+    },
+    {
+      "no": 6,
+      "coverPhoto": "ready_to_travel.jpg",
+      "title": "Collect Your Visa And Get Ready To Travel",
+      "infoLink": "https://ceac.state.gov/genniv",
+      "descriptions": [
+        "After the interview and fingerprinting (if applicable), your visa application will undergo processing.",
+        "This can take several weeks, so be patient.",
+        "Once you have your visa, you can plan your trip to the United States.",
+        "Enjoy your trip to the U.S.!"
+      ]
+    }
+  ]
+}

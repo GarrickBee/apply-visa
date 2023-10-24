@@ -8,6 +8,7 @@ import {
   TimelineSeparator,
 } from "@mui/lab";
 import {
+  Box,
   Button,
   Card,
   CardActionArea,
@@ -23,6 +24,10 @@ import {
   DialogTitle,
   List,
   ListItem,
+  Paper,
+  Step,
+  StepLabel,
+  Stepper,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -30,6 +35,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { useForm } from "react-hook-form";
 import useFormPersist from "react-hook-form-persist";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import heroBackground from "@src/assets/image/hero-bg.svg";
 
 interface FormInputs {
   [step: string]: number;
@@ -74,10 +80,6 @@ const HomePage: React.FC<{}> = () => {
     loadSteps();
   }, []);
 
-  useEffect(() => {
-    watch((value, { name, type }) => console.log(value, name, type));
-  }, [watch]);
-
   const TimelineCard: React.FC<{
     cardAlign?: "right" | "left";
     coverPhoto: string;
@@ -113,21 +115,59 @@ const HomePage: React.FC<{}> = () => {
 
   return (
     <>
-      {/* Timeline Card Details  */}
-      <Dialog fullWidth={true} maxWidth={"xl"} open={modalOpen} onClose={handleClose}>
-        <DialogTitle>Title</DialogTitle>
-        <DialogContent>
-          <Grid container spacing={2}>
-            <Grid md={6}>
-              <DialogContentText>Picture</DialogContentText>
+      <Container maxWidth="lg">
+        <Box
+          color={"transparent"}
+          height={"40px"}
+          paddingY={"10px"}
+          alignItems={"center"}
+          display={"flex"}
+        >
+          <Typography color={"whitesmoke"} zIndex={1} fontSize={"xl"} letterSpacing={0.5}>
+            <b>ApplyVisa.com</b>
+          </Typography>
+        </Box>
+      </Container>
+
+      <Box
+        sx={{
+          marginTop: "-60px",
+          width: "100%",
+          minHeight: "70vh",
+          backgroundImage: `url(${heroBackground})`,
+          backgroundPosition: "bottom center",
+          backgroundRepeat: "no-repeat",
+        }}
+        margin={0}
+        padding={0}
+        textAlign={"center"}
+        display={"flex"}
+        alignItems={"center"}
+        justifyContent={"center"}
+      >
+        <Container maxWidth="xl">
+          <Grid container justifyContent={"center"}>
+            <Grid xs={12}>
+              <Typography align={"center"} margin={"auto"} color="whitesmoke">
+                <h1 style={{ fontSize: "40px" }}>
+                  Journey to Your Tourist Visa <br /> A Tourist's Best Helper
+                </h1>
+              </Typography>
             </Grid>
-            <Grid md={6}>Description</Grid>
+            <Grid xs={12} md={6} color="text.secondary" marginBottom={2}>
+              {/* <Box sx={{ borderColor: "white", border: "solid 2px grey", borderRadius: "10px" }}>
+              <Typography color={"white"}>Follow - Apply - Check - Go!</Typography>
+            </Box> */}
+
+              <Typography gutterBottom color={"white"}>
+                Tired of the complex U.S. tourist visa application process? Simplify it with us. Our
+                platform expertly guides you through each step - from application to getting your
+                visa.
+              </Typography>
+            </Grid>
           </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
-        </DialogActions>
-      </Dialog>
+        </Container>
+      </Box>
 
       <form>
         <Container maxWidth="xl">
@@ -210,6 +250,33 @@ const HomePage: React.FC<{}> = () => {
           </Grid>
         </Container>
       </form>
+      <footer>
+        <Container>
+          <Grid container minHeight={"20vh"} display={"flex"} alignItems={"center"}>
+            <Grid xs={12} textAlign={"center"}>
+              <Typography>
+                Built By <b>Garrick</b>
+              </Typography>
+            </Grid>
+          </Grid>
+          <Box></Box>
+        </Container>
+      </footer>
+      {/* Timeline Card Details  */}
+      <Dialog fullWidth={true} maxWidth={"xl"} open={modalOpen} onClose={handleClose}>
+        <DialogTitle>Title</DialogTitle>
+        <DialogContent>
+          <Grid container spacing={2}>
+            <Grid md={6}>
+              <DialogContentText>Picture</DialogContentText>
+            </Grid>
+            <Grid md={6}>Description</Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Close</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

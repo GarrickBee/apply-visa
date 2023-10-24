@@ -1,3 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:400,700&display=swap);
 @import url(https://use.fontawesome.com/releases/v5.14.0/css/all.css);
-/* @import "./style/button.css"; */
+
+body {
+  margin: 0px;
+}

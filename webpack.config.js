@@ -68,10 +68,6 @@ module.exports = {
       patterns: [
         { from: "sitemap.xml", to: "sitemap.xml", force: true },
         { from: "robots.txt", to: "robots.txt", force: true },
-        {
-          from: path.resolve(__dirname, "src", "assets"),
-          to: path.resolve(__dirname, "build", "assets"),
-        },
       ],
       options: {
         concurrency: 100,

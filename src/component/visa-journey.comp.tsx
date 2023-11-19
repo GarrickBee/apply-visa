@@ -51,6 +51,7 @@ const VisaJourneyComp: React.FC<{}> = () => {
             steps.map((step, stepIndex) => {
               const coverImage = require(`@src/assets/image/${step.coverPhoto}`).default;
               const stepCheckBoxName = "step_" + step.no;
+              const isStepComplete = getValues(stepCheckBoxName) >= 1;
 
               return (
                 <>
@@ -88,19 +89,16 @@ const VisaJourneyComp: React.FC<{}> = () => {
                             <button
                               type="button"
                               className={
-                                (getValues(stepCheckBoxName) >= 1
+                                (isStepComplete
                                   ? "bg-gray-900 text-white "
                                   : "bg-white text-gray-900 ") +
                                 " hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded text-xs px-2.5 py-0.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800 float-right"
                               }
                               onClick={() => {
-                                setValue(
-                                  stepCheckBoxName,
-                                  getValues(stepCheckBoxName) >= 1 ? 0 : 1
-                                );
+                                setValue(stepCheckBoxName, isStepComplete ? 0 : 1);
                               }}
                             >
-                              {getValues(stepCheckBoxName) >= 1 ? "Complete" : "Incomplete"}
+                              {isStepComplete ? "Complete" : "Mark Complete"}
                             </button>
                           </div>
                           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import useFormPersist from "react-hook-form-persist";
-import NavBarComponent from "@src/component/layout/navbar";
+import NavBarComponent from "@src/component/layout/navbar.comp";
 import VisaJourneyComp from "@src/component/visa-journey.comp";
 import planet from "@src/assets/image/planet.svg";
 
@@ -18,6 +18,7 @@ import {
   XIcon,
 } from "react-share";
 import Config from "@src/config/config";
+import FooterComp from "@src/component/layout/footer.comp";
 
 interface FormInputs {
   [step: string]: number;
@@ -161,19 +162,8 @@ const NewHomePage: React.FC<{}> = () => {
             </div>
           </div>
         </section>
-        <footer className="my-20">
-          <p className="text-center text-xs text-slate-500 mt-1">
-            Made by{" "}
-            <a
-              href="https://web3templates.com"
-              target="_blank"
-              rel="noopener"
-              className="hover:underline"
-            >
-              Garlic
-            </a>
-          </p>
-        </footer>
+
+        <FooterComp></FooterComp>
       </div>
     </>
   );

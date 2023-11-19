@@ -5,9 +5,22 @@ import { useForm } from "react-hook-form";
 import useFormPersist from "react-hook-form-persist";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import NavBarComponent from "@src/component/layout/navbar";
-import TimelineComp from "@src/component/timeline.comp";
+import VisaJourneyComp from "@src/component/visa-journey.comp";
 import planet from "@src/assets/image/planet.svg";
 import { ReactSVG } from "react-svg";
+import {
+  FacebookIcon,
+  FacebookShareButton,
+  RedditIcon,
+  RedditShareButton,
+  TelegramIcon,
+  TelegramShareButton,
+  TwitterIcon,
+  TwitterShareButton,
+  WhatsappIcon,
+  WhatsappShareButton,
+  XIcon,
+} from "react-share";
 
 interface FormInputs {
   [step: string]: number;
@@ -52,6 +65,7 @@ const NewHomePage: React.FC<{}> = () => {
     loadSteps();
   }, []);
 
+  const shareUrl = window.location.href;
   return (
     <>
       <div className="max-w-screen-xl mx-auto px-5">
@@ -76,14 +90,45 @@ const NewHomePage: React.FC<{}> = () => {
               >
                 Share Your Journey
               </a>
-              <a
-                href="https://github.com/GarrickBee/apply-visa"
-                rel="noopener"
-                target="_blank"
+
+              <button
+                data-popover-target="popover-animation"
+                type="button"
                 className="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 bg-white border-2 border-black hover:bg-gray-100 text-black flex gap-1 items-center justify-center"
               >
                 Share To Your Friends
-              </a>
+              </button>
+
+              <div
+                data-popover
+                id="popover-animation"
+                role="tooltip"
+                className="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800"
+              >
+                <div className="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
+                  <h3 className="font-semibold text-gray-900 dark:text-white text-center">
+                    Share To Your Friends
+                  </h3>
+                </div>
+                <div className="px-3 py-2 text-center">
+                  <FacebookShareButton url={shareUrl} className="mr-1">
+                    <FacebookIcon size={32} round />
+                  </FacebookShareButton>
+                  <TwitterShareButton url={shareUrl} className="mr-1">
+                    <XIcon size={32} round />
+                  </TwitterShareButton>
+                  <WhatsappShareButton url={shareUrl} className="mr-1">
+                    <WhatsappIcon size={32} round />
+                  </WhatsappShareButton>
+                  <TelegramShareButton url={shareUrl} className="mr-1">
+                    <TelegramIcon size={32} round />
+                  </TelegramShareButton>
+                  <RedditShareButton url={shareUrl} className="mr-1">
+                    <RedditIcon size={32} round />
+                  </RedditShareButton>
+                </div>
+                <div data-popper-arrow></div>
+              </div>
             </div>
           </div>
         </div>
@@ -92,7 +137,7 @@ const NewHomePage: React.FC<{}> = () => {
         <section>
           <div className="grid grid-flow-row-dense grid-cols-12 justify-items-center">
             <div className="md:col-start-3 md:col-span-8 col-span-12">
-              <TimelineComp></TimelineComp>
+              <VisaJourneyComp></VisaJourneyComp>
             </div>
           </div>
         </section>

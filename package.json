@@ -34,6 +34,7 @@
     "react-hook-form-persist": "^3.0.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.4.2",
+    "react-share": "^5.0.2",
     "react-svg": "^16.1.30",
     "react-syntax-highlighter": "^15.5.0",
     "sass-loader": "^12.3.0",

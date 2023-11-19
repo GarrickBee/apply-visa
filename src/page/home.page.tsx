@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
-import { Box, Container, Step, Typography, useTheme } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
 import { useForm } from "react-hook-form";
 import useFormPersist from "react-hook-form-persist";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import NavBarComponent from "@src/component/layout/navbar";
 import VisaJourneyComp from "@src/component/visa-journey.comp";
 import planet from "@src/assets/image/planet.svg";
@@ -39,14 +36,7 @@ interface Step {
 type Steps = Step[];
 
 const NewHomePage: React.FC<{}> = () => {
-  const theme = useTheme();
-  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
-
-  // Init Detail Explanation Modal
-  const [modalOpen, setModalOpen] = useState(false);
-  const handleClose = () => setModalOpen(false);
-
-  const { register, watch, setValue, getValues, reset } = useForm<FormInputs>();
+  const { watch, setValue } = useForm<FormInputs>();
   // Load save form data
   useFormPersist("visa.us.travel", {
     watch,
@@ -171,17 +161,18 @@ const NewHomePage: React.FC<{}> = () => {
             </div>
           </div>
         </section>
-        <footer>
-          <Container>
-            <Grid container minHeight={"20vh"} display={"flex"} alignItems={"center"}>
-              <Grid xs={12} textAlign={"center"}>
-                <Typography>
-                  Built By <b>Garrick</b>
-                </Typography>
-              </Grid>
-            </Grid>
-            <Box></Box>
-          </Container>
+        <footer className="my-20">
+          <p className="text-center text-xs text-slate-500 mt-1">
+            Made by{" "}
+            <a
+              href="https://web3templates.com"
+              target="_blank"
+              rel="noopener"
+              className="hover:underline"
+            >
+              Garlic
+            </a>
+          </p>
         </footer>
       </div>
     </>

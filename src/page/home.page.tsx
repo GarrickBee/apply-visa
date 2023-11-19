@@ -15,12 +15,12 @@ import {
   RedditShareButton,
   TelegramIcon,
   TelegramShareButton,
-  TwitterIcon,
   TwitterShareButton,
   WhatsappIcon,
   WhatsappShareButton,
   XIcon,
 } from "react-share";
+import Config from "@src/config/config";
 
 interface FormInputs {
   [step: string]: number;
@@ -68,7 +68,7 @@ const NewHomePage: React.FC<{}> = () => {
   const shareUrl = window.location.href;
   return (
     <>
-      <div className="max-w-screen-xl mx-auto px-5">
+      <div className="container">
         <NavBarComponent></NavBarComponent>
         <div className="grid lg:grid-cols-12 lg:grid-flow-row-dense place-items-center pt-16 pb-8 md:pt-5 md:pb-10">
           <img src={planet} alt="" className="col-span-5 py-6 md:order-1 hidden md:block" />
@@ -83,7 +83,7 @@ const NewHomePage: React.FC<{}> = () => {
             </p>
             <div className="mt-6 flex flex-col sm:flex-row gap-3">
               <a
-                href="https://forms.gle/gi413N6qzPS2weHe6"
+                href={Config.getJourneyLink()}
                 target="_blank"
                 rel="noopener"
                 className="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 bg-black text-white hover:bg-gray-800 border-2 border-transparent flex gap-1 items-center justify-center"
@@ -136,12 +136,41 @@ const NewHomePage: React.FC<{}> = () => {
         {/* Form Journey Section  */}
         <section>
           <div className="grid grid-flow-row-dense grid-cols-12 justify-items-center">
+            <div className="col-span-12 mb-10 text-center">
+              <h2 className="text-4xl lg:text-5xl font-bold lg:tracking-tight">US Travel Visa</h2>
+            </div>
+
             <div className="md:col-start-3 md:col-span-8 col-span-12">
               <VisaJourneyComp></VisaJourneyComp>
             </div>
           </div>
         </section>
 
+        <section>
+          <div className="bg-black p-8 md:px-20 md:py-20 mt-20 mx-auto max-w-5xl rounded-lg flex flex-col items-center text-center">
+            <h2 className="text-white text-4xl md:text-6xl tracking-tight">
+              Your desire country is not listed here?
+            </h2>
+            <p className="text-slate-400 mt-4 text-lg md:text-xl">
+              Ask your friends to share their journey to us by clicking the link below or drop us an
+              email at{" "}
+              <a
+                href="mailto:applyvisa.gk@gmail.com"
+                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+              >
+                here
+              </a>
+            </p>
+            <div className="flex mt-5">
+              <a
+                href={Config.getJourneyLink()}
+                className="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 bg-white text-black border-2 border-transparent"
+              >
+                Share Your Journey
+              </a>
+            </div>
+          </div>
+        </section>
         <footer>
           <Container>
             <Grid container minHeight={"20vh"} display={"flex"} alignItems={"center"}>

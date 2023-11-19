@@ -38,18 +38,6 @@ module.exports = {
           "postcss-loader", // post process the compiled CSS
         ],
       },
-      // {
-      //   test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
-      //   type: "asset/resource",
-      //   use: [
-      //     {
-      //       loader: "url-loader",
-      //       options: {
-      //         limit: 10000,
-      //       },
-      //     },
-      //   ],
-      // },
       {
         test: /\.(png|jpe?g|gif|jp2|webp|avif|svg)$/,
         loader: "file-loader",

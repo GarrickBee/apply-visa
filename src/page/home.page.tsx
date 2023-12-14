@@ -1,41 +1,24 @@
-import { ReactNode, useEffect, useState } from "react";
-import {
-  Timeline,
-  TimelineConnector,
-  TimelineContent,
-  TimelineItem,
-  TimelineOppositeContent,
-  TimelineSeparator,
-} from "@mui/lab";
-import {
-  Box,
-  Button,
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Checkbox,
-  Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  List,
-  ListItem,
-  Paper,
-  Step,
-  StepLabel,
-  Stepper,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import useFormPersist from "react-hook-form-persist";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import heroBackground from "@src/assets/image/hero-bg.svg";
+import NavBarComponent from "@src/component/layout/navbar.comp";
+import VisaJourneyComp from "@src/component/visa-journey.comp";
+import planet from "@src/assets/image/planet.svg";
+
+import {
+  FacebookIcon,
+  FacebookShareButton,
+  RedditIcon,
+  RedditShareButton,
+  TelegramIcon,
+  TelegramShareButton,
+  TwitterShareButton,
+  WhatsappIcon,
+  WhatsappShareButton,
+  XIcon,
+} from "react-share";
+import Config from "@src/config/config";
+import FooterComp from "@src/component/layout/footer.comp";
 
 interface FormInputs {
   [step: string]: number;
@@ -53,15 +36,8 @@ interface Step {
 
 type Steps = Step[];
 
-const HomePage: React.FC<{}> = () => {
-  const theme = useTheme();
-  const isMobile = !useMediaQuery(theme.breakpoints.up("md"));
-
-  // Init Detail Explanation Modal
-  const [modalOpen, setModalOpen] = useState(false);
-  const handleClose = () => setModalOpen(false);
-
-  const { register, watch, setValue, getValues, reset } = useForm<FormInputs>();
+const NewHomePage: React.FC<{}> = () => {
+  const { watch, setValue } = useForm<FormInputs>();
   // Load save form data
   useFormPersist("visa.us.travel", {
     watch,
@@ -73,212 +49,128 @@ const HomePage: React.FC<{}> = () => {
   const [steps, setSteps] = useState<Steps | undefined>(undefined);
   useEffect(() => {
     const loadSteps = async () => {
-      const response = await import("./visa.us.en.json");
+      const response = await import("@src/assets/json/journey/visa.us.en.json");
       setSteps(response.default.steps.sort((a, b) => a.no - b.no));
     };
 
     loadSteps();
   }, []);
 
-  const TimelineCard: React.FC<{
-    cardAlign?: "right" | "left";
-    coverPhoto: string;
-    title: string;
-    infoLink: string;
-    applicationLink?: string;
-    children: ReactNode;
-  }> = ({ cardAlign, title, coverPhoto, infoLink, applicationLink, children }) => {
-    return (
-      <TimelineContent>
-        <Card sx={{ maxWidth: 415, width: "100%", ...(cardAlign ? { float: cardAlign } : {}) }}>
-          <CardActionArea>
-            <CardMedia sx={{ height: 200, objectFit: "cover" }} image={coverPhoto} title={title} />
-            <CardContent sx={{ textAlign: "left" }}>
-              <Typography gutterBottom variant="h5" component="div" lineHeight={1.1}>
-                {title}
-              </Typography>
-              {children}
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-            {applicationLink && (
-              <Button href={applicationLink} target="_blank" rel="noopener" size="small">
-                Go To Application
-              </Button>
-            )}
-            {/* <Button onClick={() => setModalOpen(true)}>Open modal</Button> */}
-          </CardActions>
-        </Card>
-      </TimelineContent>
-    );
-  };
-
+  const shareUrl = window.location.href;
   return (
     <>
-      <Container maxWidth="lg">
-        <Box
-          color={"transparent"}
-          height={"40px"}
-          paddingY={"10px"}
-          alignItems={"center"}
-          display={"flex"}
-        >
-          <Typography color={"whitesmoke"} zIndex={1} fontSize={"xl"} letterSpacing={0.5}>
-            <b>ApplyVisa.com</b>
-          </Typography>
-        </Box>
-      </Container>
+      <div className="container">
+        <NavBarComponent></NavBarComponent>
+        <div className="grid grid-cols-12 grid-flow-row-dense  lg:grid-cols-12 lg:grid-flow-row-dense place-items-center pt-16 pb-8 md:pt-5 md:pb-10">
+          <img
+            src={planet}
+            alt=""
+            className="md:col-span-5 col-start-3 col-span-8 h-full py-6 md:order-1 block md:block "
+          />
+          <div className="col-span-12 md:col-span-7">
+            <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter text-center md:text-left ">
+              Journey to Your Tourist Visa
+            </h1>
+            <p className="text-lg mt-4 text-slate-600 max-w-xl">
+              Tired of the complex U.S. tourist visa application process? Simplify it with us. Our
+              platform expertly guides you through each step - from application to getting your
+              visa.
+            </p>
+            <div className="mt-6 flex flex-col sm:flex-row gap-3">
+              <a
+                href={Config.getJourneyLink()}
+                target="_blank"
+                rel="noopener"
+                className="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 bg-black text-white hover:bg-gray-800 border-2 border-transparent flex gap-1 items-center justify-center"
+              >
+                Share Your Journey
+              </a>
 
-      <Box
-        sx={{
-          marginTop: "-60px",
-          width: "100%",
-          minHeight: "70vh",
-          backgroundImage: `url(${heroBackground})`,
-          backgroundPosition: "bottom center",
-          backgroundRepeat: "no-repeat",
-        }}
-        margin={0}
-        padding={0}
-        textAlign={"center"}
-        display={"flex"}
-        alignItems={"center"}
-        justifyContent={"center"}
-      >
-        <Container maxWidth="xl">
-          <Grid container justifyContent={"center"}>
-            <Grid xs={12}>
-              <Typography align={"center"} margin={"auto"} color="whitesmoke">
-                <h1 style={{ fontSize: "40px" }}>
-                  Journey to Your Tourist Visa <br /> A Tourist's Best Helper
-                </h1>
-              </Typography>
-            </Grid>
-            <Grid xs={12} md={6} color="text.secondary" marginBottom={2}>
-              {/* <Box sx={{ borderColor: "white", border: "solid 2px grey", borderRadius: "10px" }}>
-              <Typography color={"white"}>Follow - Apply - Check - Go!</Typography>
-            </Box> */}
+              <button
+                data-popover-target="popover-animation"
+                type="button"
+                className="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 bg-white border-2 border-black hover:bg-gray-100 text-black flex gap-1 items-center justify-center"
+              >
+                Share To Your Friends
+              </button>
 
-              <Typography gutterBottom color={"white"}>
-                Tired of the complex U.S. tourist visa application process? Simplify it with us. Our
-                platform expertly guides you through each step - from application to getting your
-                visa.
-              </Typography>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
+              <div
+                data-popover
+                id="popover-animation"
+                role="tooltip"
+                className="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800"
+              >
+                <div className="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
+                  <h3 className="font-semibold text-gray-900 dark:text-white text-center">
+                    Share To Your Friends
+                  </h3>
+                </div>
+                <div className="px-3 py-2 text-center">
+                  <FacebookShareButton url={shareUrl} className="mr-1">
+                    <FacebookIcon size={32} round />
+                  </FacebookShareButton>
+                  <TwitterShareButton url={shareUrl} className="mr-1">
+                    <XIcon size={32} round />
+                  </TwitterShareButton>
+                  <WhatsappShareButton url={shareUrl} className="mr-1">
+                    <WhatsappIcon size={32} round />
+                  </WhatsappShareButton>
+                  <TelegramShareButton url={shareUrl} className="mr-1">
+                    <TelegramIcon size={32} round />
+                  </TelegramShareButton>
+                  <RedditShareButton url={shareUrl} className="mr-1">
+                    <RedditIcon size={32} round />
+                  </RedditShareButton>
+                </div>
+                <div data-popper-arrow></div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <form>
-        <Container maxWidth="xl">
-          <Timeline position={isMobile ? "left" : "alternate"} style={{ padding: "0" }}>
-            <input type="hidden" {...register("maxStep")}></input>
-            {steps &&
-              steps.map((step, stepIndex) => {
-                const coverImage = require(`@src/assets/image/${step.coverPhoto}`).default;
-                const formName = "step_" + step.no;
+        {/* Form Journey Section  */}
+        <section>
+          <div className="grid grid-flow-row-dense grid-cols-12 justify-items-center">
+            <div className="col-span-12 mb-10 text-center">
+              <h2 className="text-4xl lg:text-5xl font-bold lg:tracking-tight">US Travel Visa</h2>
+            </div>
 
-                return (
-                  <TimelineItem key={"step_" + stepIndex}>
-                    <TimelineOppositeContent
-                      sx={{
-                        ...{ marginBottom: "auto", marginTop: "auto" },
-                        ...(isMobile ? { flex: 0, padding: 0 } : {}),
-                      }}
-                      align="right"
-                      variant="body2"
-                      color="text.secondary"
-                    >
-                      {isMobile ? "" : "Step"} {stepIndex + 1}
-                    </TimelineOppositeContent>
+            <div className="md:col-start-3 md:col-span-8 col-span-12">
+              <VisaJourneyComp></VisaJourneyComp>
+            </div>
+          </div>
+        </section>
 
-                    <TimelineSeparator>
-                      <TimelineConnector />
-                      <Checkbox
-                        color="primary"
-                        {...register(formName)}
-                        checked={getValues(formName) >= 1}
-                        value={1}
-                      />
-                      <TimelineConnector />
-                    </TimelineSeparator>
+        <section>
+          <div className="bg-black p-8 md:px-20 md:py-20 mt-20 mx-auto max-w-5xl rounded-lg flex flex-col items-center text-center">
+            <h2 className="text-white text-4xl md:text-6xl tracking-tight">
+              Your desire country is not listed here?
+            </h2>
+            <p className="text-slate-400 mt-4 text-lg md:text-xl">
+              Ask your friends to share their journey to us by clicking the link below or drop us an
+              email at{" "}
+              <a
+                href="mailto:applyvisa.gk@gmail.com"
+                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+              >
+                here
+              </a>
+            </p>
+            <div className="flex mt-5">
+              <a
+                href={Config.getJourneyLink()}
+                className="rounded text-center transition focus-visible:ring-2 ring-offset-2 ring-gray-200 px-5 py-2.5 bg-white text-black border-2 border-transparent"
+              >
+                Share Your Journey
+              </a>
+            </div>
+          </div>
+        </section>
 
-                    <TimelineCard
-                      coverPhoto={coverImage}
-                      title={step.title}
-                      infoLink={step.infoLink}
-                      applicationLink={step.applicationLink}
-                      cardAlign={isMobile ? "right" : stepIndex % 2 == 0 ? "left" : "right"}
-                    >
-                      <List sx={{ listStyle: "decimal", pl: 2 }} color="secondary">
-                        {step &&
-                          step.descriptions &&
-                          step.descriptions.map((desc, descIndex) => {
-                            return (
-                              <ListItem
-                                sx={{ display: "list-item" }}
-                                disableGutters
-                                color="text.secondary"
-                              >
-                                <Typography
-                                  variant="body2"
-                                  color="text.secondary"
-                                  key={"desc_" + descIndex}
-                                  gutterBottom={descIndex != step.descriptions.length - 1}
-                                >
-                                  {desc}
-                                </Typography>
-                              </ListItem>
-                            );
-                          })}
-                      </List>
-                    </TimelineCard>
-                  </TimelineItem>
-                );
-              })}
-          </Timeline>
-
-          <Grid container spacing={2} justifyContent={"center"} textAlign={"center"}>
-            <Grid xs={12} md={1}>
-              <Button variant="contained">Share</Button>
-            </Grid>
-            <Grid xs={12} md={1}>
-              <Button variant="contained" onClick={() => reset()}>
-                Reset
-              </Button>
-            </Grid>
-          </Grid>
-        </Container>
-      </form>
-      <footer>
-        <Container>
-          <Grid container minHeight={"20vh"} display={"flex"} alignItems={"center"}>
-            <Grid xs={12} textAlign={"center"}>
-              <Typography>
-                Built By <b>Garrick</b>
-              </Typography>
-            </Grid>
-          </Grid>
-          <Box></Box>
-        </Container>
-      </footer>
-      {/* Timeline Card Details  */}
-      <Dialog fullWidth={true} maxWidth={"xl"} open={modalOpen} onClose={handleClose}>
-        <DialogTitle>Title</DialogTitle>
-        <DialogContent>
-          <Grid container spacing={2}>
-            <Grid md={6}>
-              <DialogContentText>Picture</DialogContentText>
-            </Grid>
-            <Grid md={6}>Description</Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
-        </DialogActions>
-      </Dialog>
+        <FooterComp></FooterComp>
+      </div>
     </>
   );
 };
 
-export default HomePage;
+export default NewHomePage;

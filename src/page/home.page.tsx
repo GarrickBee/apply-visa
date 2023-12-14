@@ -61,10 +61,14 @@ const NewHomePage: React.FC<{}> = () => {
     <>
       <div className="container">
         <NavBarComponent></NavBarComponent>
-        <div className="grid lg:grid-cols-12 lg:grid-flow-row-dense place-items-center pt-16 pb-8 md:pt-5 md:pb-10">
-          <img src={planet} alt="" className="col-span-5 py-6 md:order-1 hidden md:block" />
-          <div className="col-span-7">
-            <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter">
+        <div className="grid grid-cols-12 grid-flow-row-dense  lg:grid-cols-12 lg:grid-flow-row-dense place-items-center pt-16 pb-8 md:pt-5 md:pb-10">
+          <img
+            src={planet}
+            alt=""
+            className="md:col-span-5 col-start-3 col-span-8 h-full py-6 md:order-1 block md:block "
+          />
+          <div className="col-span-12 md:col-span-7">
+            <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter text-center md:text-left ">
               Journey to Your Tourist Visa
             </h1>
             <p className="text-lg mt-4 text-slate-600 max-w-xl">

@@ -80,11 +80,11 @@ const VisaJourneyComp: React.FC<{}> = () => {
                       {/* Card  */}
                       <div className="grid grid-flow-row-dense grid-cols-12 rounded-lg border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-800 flex-col w-100 max-w-fit md:flex-row">
                         <img
-                          className="col-span-4 object-cover w-full rounded-t-lg h-full md:rounded-none md:rounded-s-lg"
+                          className="col-span-12 md:col-span-4 object-cover w-full rounded-t-lg h-full md:rounded-none md:rounded-s-lg"
                           src={coverImage}
                           alt=""
                         />
-                        <div className="col-span-8 flex flex-col justify-between p-4 leading-normal">
+                        <div className="col-span-12 md:col-span-8 flex flex-col justify-between p-4 leading-normal">
                           <div>
                             <button
                               type="button"
